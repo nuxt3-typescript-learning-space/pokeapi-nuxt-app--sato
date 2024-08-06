@@ -1,0 +1,14 @@
+<script setup lang="ts">
+import { cn } from '@/lib/tailwind';
+import type { HTMLAttributes } from 'vue';
+const props = defineProps<{
+  class?: HTMLAttributes['class'];
+}>();
+const { class: className } = toRefs(props);
+</script>
+
+<template>
+  <h3 :class="cn('text-2xl font-semibold leading-none tracking-tight', className)">
+    <slot />
+  </h3>
+</template>
