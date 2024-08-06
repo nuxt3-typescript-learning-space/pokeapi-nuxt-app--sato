@@ -57,6 +57,15 @@ export const usePokemonDataStore = defineStore('pokemonDataStore', {
     getPreviousUrl: (state: State): string => {
       return getPokeApiUrlWithLimit(state.pokemonData.previous);
     },
+    /**
+     *
+     * ポケモン個別のIDを取得
+     * @param {State} state - ストアの状態
+     * @returns {string[]} - ポケモンの個別IDのリスト
+     */
+    getPokemonIds: (state: State): string[] => {
+      return state.detailedPokemonData.map(({ id }) => id.toString());
+    },
   },
   actions: {
     /**
