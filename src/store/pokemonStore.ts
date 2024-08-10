@@ -48,19 +48,12 @@ export const usePokemonStore = defineStore('pokemon', {
         this.pokemon = response;
         this.pokemonResults = response.results;
 
-        await Promise.all(
-          this.pokemonResults.map(async (pokemon) => {
-            const detail = await this.fetchPokemonDetails(pokemon.url);
-            this.pokemonDetails.push(detail);
-          }),
-        );
-
-        await Promise.all(
-          this.pokemonDetails.map(async (pokemon) => {
-            const detail = await this.fetchPokemonDetails(pokemon.species.url);
-            this.pokemonJapanese.push(detail);
-          }),
-        );
+        for (const pokemon of this.pokemonResults) {
+          const detail = await this.fetchPokemonDetails(pokemon.url);
+          this.pokemonDetails.push(detail);
+          const speciesDetail = await this.fetchPokemonDetails(detail.species.url);
+          this.pokemonJapanese.push(speciesDetail);
+        }
       } catch (error) {
         this.setError(false);
       } finally {
