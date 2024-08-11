@@ -55,7 +55,7 @@ export const usePokemonStore = defineStore('pokemon', {
           this.pokemonJapanese.push(speciesDetail);
         }
       } catch (error) {
-        this.setError(false);
+        this.setError(true);
       } finally {
         this.setLoading(false);
       }
