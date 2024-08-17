@@ -1,5 +1,3 @@
-import type { types } from 'util';
-
 export interface Pokemon {
   count: number;
   next: string;
@@ -17,23 +15,23 @@ export interface PokemonDetails {
   id: number;
   name: string;
   url: string;
-  species: species;
+  species: Species;
   names: names[];
-  sprites: sprites;
-  types: types[];
+  sprites: Sprites;
+  types: PokemonTypes[];
 }
 
 export interface PokemonJapanese {
   name: string;
-  names: names[];
+  names: Names[];
 }
 
-export interface species {
+export interface Species {
   name: string;
   url: string;
 }
 
-export interface names {
+export interface Names {
   language: {
     name: string;
     url: string;
@@ -41,7 +39,7 @@ export interface names {
   name: string;
 }
 
-export interface sprites {
+export interface Sprites {
   other: {
     'official-artwork': {
       front_default: string;
@@ -49,7 +47,7 @@ export interface sprites {
   };
 }
 
-export interface types {
+export interface PokemonTypes {
   slot: number;
   type: {
     name: string;
