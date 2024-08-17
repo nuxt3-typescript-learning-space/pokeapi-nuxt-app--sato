@@ -32,7 +32,9 @@ export const usePokemonStore = defineStore('pokemon', {
     getPokemonImageUrls(): string[] {
       return this.pokemonDetails.map(({ sprites }) => sprites.other['official-artwork'].front_default || '');
     },
-    getPokemonTypes: (state) => state.pokemonDetails.map((pokemon) => pokemon.types),
+    getPokemonTypes(): string[][] {
+      return this.pokemonDetails.map(({ types }) => types.map(({ type: { name } }) => name));
+    },
   },
   actions: {
     setLoading(isLoading: boolean): void {
