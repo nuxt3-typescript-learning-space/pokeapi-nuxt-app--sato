@@ -1,23 +1,9 @@
-<script lang="ts">
-export default defineComponent({
-  props: {
-    number: {
-      type: Number,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
-    },
-    type: {
-      type: Array,
-      required: true,
-    },
-  },
+<script setup lang="ts">
+defineProps({
+  number: Number,
+  name: String,
+  imageUrl: String,
+  type: String,
 });
 </script>
 
@@ -25,8 +11,9 @@ export default defineComponent({
   <div class="pokemon-card">
     <NuxtLink :to="`/pokemon/${number}`">
       <p>図鑑No.{{ number }}</p>
-      <img :src="imageUrl" :alt="name">
+      <img :src="imageUrl" :alt="name" />
       <p>{{ name }}</p>
+      <p>{{ type }}</p>
     </NuxtLink>
   </div>
 </template>
@@ -39,7 +26,9 @@ export default defineComponent({
   margin: 10px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   background-color: #fff;
 }
 

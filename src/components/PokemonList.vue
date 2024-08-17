@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import PokemonCard from '@/components/PokemonCard.vue';
 import { usePokemonStore } from '@/store/pokemonStore';
-const { getPokemonIds, getPokemonJapaneseNames, getPokemonImageUrls, getPokemonTypes } = storeToRefs(usePokemonStore());
+const { getPokemonIds, getPokemonJapaneseNames, getPokemonImageUrls } = storeToRefs(usePokemonStore());
 const { fetchPokemonData } = usePokemonStore();
 
 onMounted(async () => {
@@ -12,12 +12,7 @@ onMounted(async () => {
   <section class="pokemon-list">
     <ul>
       <li v-for="(id, index) in getPokemonIds" :key="index">
-        <PokemonCard
-          :number="id"
-          :name="getPokemonJapaneseNames[index]"
-          :image-url="getPokemonImageUrls[index]"
-          :type="getPokemonTypes"
-        />
+        <PokemonCard :number="id" :name="getPokemonJapaneseNames[index]" :image-url="getPokemonImageUrls[index]" />
       </li>
     </ul>
   </section>
