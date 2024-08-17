@@ -21,7 +21,7 @@ export interface PokemonDetails {
   types: PokemonTypes[];
 }
 
-export interface PokemonJapanese {
+export interface PokemonSpecies {
   name: string;
   names: Names[];
 }

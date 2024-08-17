@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '@/constants/pokemon';
-import type { Pokemon, PokemonDetails, Species, PokemonTypes } from '@/types/pokemon';
+import type { Pokemon, PokemonDetails, PokemonSpecies, PokemonTypes } from '@/types/pokemon';
 
 export async function fetchPokemonData(): Promise<Pokemon> {
   const response = await $fetch(API_BASE_URL.POKEMON);
@@ -11,9 +11,9 @@ export async function fetchPokemonDetails(url: string): Promise<PokemonDetails> 
   return response as PokemonDetails;
 }
 
-export async function fetchPokemonSpeciesData(id: number): Promise<Species> {
+export async function fetchPokemonSpeciesData(id: number): Promise<PokemonSpecies> {
   const response = await $fetch(`${API_BASE_URL.SPECIES}${id}`);
-  return response as Species;
+  return response as PokemonSpecies;
 }
 
 export async function fetchPokemonTypeData(id: number): Promise<PokemonTypes> {

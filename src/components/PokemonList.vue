@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import PokemonCard from '@/components/PokemonCard.vue';
 import { usePokemonStore } from '@/store/pokemonStore';
-const { getPokemonJapaneseNames, getPokemonImageUrls, getPokemonIds, getPokemonTypes } = storeToRefs(usePokemonStore());
+const { getPokemonIds, getPokemonJapaneseNames, getPokemonImageUrls, getPokemonTypes } = storeToRefs(usePokemonStore());
 const { fetchPokemonData } = usePokemonStore();
 
-onMounted(async() => {
+onMounted(async () => {
   await fetchPokemonData();
 });
 </script>
 <template>
   <section class="pokemon-list">
     <ul>
-      <li v-for="(name, index) in getPokemonJapaneseNames" :key="index">
-        <PokemonCard :name="name" :image-url="getPokemonImageUrls[index]" :number="getPokemonIds[index]" :type="getPokemonTypes" />
+      <li v-for="(id, index) in getPokemonIds" :key="index">
+        <PokemonCard
+          :number="id"
+          :name="getPokemonJapaneseNames[index]"
+          :image-url="getPokemonImageUrls[index]"
+          :type="getPokemonTypes"
+        />
       </li>
     </ul>
   </section>

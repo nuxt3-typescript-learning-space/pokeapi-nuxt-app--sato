@@ -1,11 +1,11 @@
-import { fetchPokemonData, fetchPokemonDetails } from '@/services/api';
-import type { Pokemon, PokemonResults, PokemonDetails, PokemonJapanese } from '@/types/pokemon';
+import { fetchPokemonData, fetchPokemonDetails, fetchPokemonSpeciesData } from '@/services/api';
+import type { Pokemon, PokemonResults, PokemonDetails, PokemonSpecies } from '@/types/pokemon';
 
 type PokemonState = {
   pokemon: Pokemon | null;
   pokemonResults: PokemonResults[];
   pokemonDetails: PokemonDetails[];
-  pokemonJapanese: PokemonJapanese[];
+  pokemonSpecies: PokemonSpecies[];
   isLoading: boolean;
   isError: boolean;
 };
@@ -15,22 +15,22 @@ export const usePokemonStore = defineStore('pokemon', {
     pokemon: null as Pokemon | null,
     pokemonResults: [] as PokemonResults[],
     pokemonDetails: [] as PokemonDetails[],
-    pokemonJapanese: [] as PokemonJapanese[],
+    pokemonSpecies: [] as PokemonSpecies[], // ポケモン個別のデータ
     isLoading: false,
     isError: false,
   }),
   getters: {
+    getPokemonIds(): number[] {
+      return this.pokemonDetails.map(({ id }) => id);
+    },
     getPokemonJapaneseNames(): string[] {
-      return this.pokemonJapanese
-        .flatMap((pokemon) => pokemon.names)
-        .filter((name) => name.language.name === 'ja')
-        .map((name) => name.name);
+      return this.pokemonSpecies
+        .flatMap(({ names }) => names)
+        .filter(({ language }) => language.name === 'ja')
+        .map(({ name }) => name);
     },
     getPokemonImageUrls(): string[] {
       return this.pokemonDetails.map(({ sprites }) => sprites.other['official-artwork'].front_default || '');
-    },
-    getPokemonIds(): number[] {
-      return this.pokemonDetails.map(({ id }) => id);
     },
     getPokemonTypes: (state) => state.pokemonDetails.map((pokemon) => pokemon.types),
   },
@@ -49,10 +49,12 @@ export const usePokemonStore = defineStore('pokemon', {
         this.pokemonResults = response.results;
 
         for (const pokemon of this.pokemonResults) {
-          const detail = await this.fetchPokemonDetails(pokemon.url);
-          this.pokemonDetails.push(detail);
-          const speciesDetail = await this.fetchPokemonDetails(detail.species.url);
-          this.pokemonJapanese.push(speciesDetail);
+          const pokemonDetail = await this.fetchPokemonDetails(pokemon.url);
+          this.pokemonDetails.push(pokemonDetail);
+
+          const pokemonId = pokemonDetail.id;
+          const speciesDetail = await fetchPokemonSpeciesData(pokemonId);
+          this.pokemonSpecies.push(speciesDetail);
         }
       } catch (error) {
         this.setError(true);
