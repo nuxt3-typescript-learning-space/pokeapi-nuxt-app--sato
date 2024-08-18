@@ -51,7 +51,7 @@ export const usePokemonStore = defineStore('pokemon', {
         this.pokemonResults = response.results;
 
         for (const pokemon of this.pokemonResults) {
-          const pokemonDetail = await this.fetchPokemonDetails(pokemon.url);
+          const pokemonDetail = await fetchPokemonDetails(pokemon.url);
           this.pokemonDetails.push(pokemonDetail);
 
           const pokemonId = pokemonDetail.id;
@@ -63,14 +63,6 @@ export const usePokemonStore = defineStore('pokemon', {
       } finally {
         this.setLoading(false);
       }
-    },
-    async fetchPokemonDetails(url: string): Promise<PokemonDetails> {
-      const detail = await fetchPokemonDetails(url);
-      return detail;
-    },
-    async fetchPokemonJapaneseData(url: string): Promise<PokemonDetails> {
-      const detail = await fetchPokemonDetails(url);
-      return detail;
     },
   },
 });

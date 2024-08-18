@@ -1,7 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import PokemonDetail from '@/components/PokemonDetail.vue';
+</script>
 
 <template>
-  <section>
-    <h1>ポケモン詳細ページ</h1>
-  </section>
+  <PokemonDetail />
 </template>
