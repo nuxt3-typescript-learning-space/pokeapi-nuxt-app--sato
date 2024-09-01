@@ -1,8 +1,8 @@
 import { API_BASE_URL } from '@/constants/pokemon';
 import type { Pokemon, PokemonDetails, PokemonSpecies, PokemonTypes } from '@/types/pokemon';
 
-export async function fetchPokemonData(): Promise<Pokemon> {
-  const response = await $fetch(API_BASE_URL.POKEMON);
+export async function fetchPokemonData(offset: number): Promise<Pokemon> {
+  const response = await $fetch(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);
   return response as Pokemon;
 }
 

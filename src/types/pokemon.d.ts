@@ -14,16 +14,34 @@ export interface PokemonResults {
 export interface PokemonDetails {
   id: number;
   name: string;
-  url: string;
-  species: Species;
-  names: names[];
-  sprites: Sprites;
-  types: PokemonTypes[];
+  sprites: {
+    other: {
+      'official-artwork': {
+        front_default: string;
+      };
+    };
+  };
+  types: {
+    slot: number;
+    type: {
+      name: string;
+      url: string;
+    };
+  }[];
+  stats: {
+    base_stat: number;
+    effort: number;
+    stat: {
+      name: string;
+      url: string;
+    };
+  }[];
 }
 
 export interface PokemonSpecies {
   name: string;
   names: Names[];
+  flavor_text_entries: FlavorTextEntries[];
 }
 
 export interface Species {

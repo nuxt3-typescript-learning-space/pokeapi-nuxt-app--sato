@@ -1,20 +1,30 @@
 <script setup lang="ts">
 import PokemonCard from '@/components/PokemonCard.vue';
 import { usePokemonStore } from '@/store/pokemonStore';
-const { getPokemonIds, getPokemonJapaneseNames, getPokemonImageUrls } = storeToRefs(usePokemonStore());
-const { fetchPokemonData } = usePokemonStore();
+const { getPokemonIds, getPokemonJapaneseNames, getPokemonImageUrls, getPokemonTypes } = storeToRefs(usePokemonStore());
+const { fetchPokemonData, fetchMorePokemonData } = usePokemonStore();
 
 onMounted(async () => {
   await fetchPokemonData();
 });
+
+const loadMorePokemon = async () => {
+  await fetchMorePokemonData();
+};
 </script>
 <template>
   <section class="pokemon-list">
     <ul>
       <li v-for="(id, index) in getPokemonIds" :key="index">
-        <PokemonCard :number="id" :name="getPokemonJapaneseNames[index]" :image-url="getPokemonImageUrls[index]" />
+        <PokemonCard
+          :number="id"
+          :name="getPokemonJapaneseNames[index]"
+          :image-url="getPokemonImageUrls[index]"
+          :types="getPokemonTypes[index]"
+        />
       </li>
     </ul>
+    <button @click="loadMorePokemon">もっとポケモンを表示する</button>
   </section>
 </template>
 

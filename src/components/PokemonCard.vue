@@ -1,9 +1,21 @@
 <script setup lang="ts">
 defineProps({
-  number: Number,
-  name: String,
-  imageUrl: String,
-  type: String,
+  number: {
+    type: Number,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  imageUrl: {
+    type: String,
+    required: true,
+  },
+  types: {
+    type: Array as PropType<string[]>,
+    required: true,
+  },
 });
 </script>
 
@@ -13,7 +25,16 @@ defineProps({
       <p>図鑑No.{{ number }}</p>
       <img :src="imageUrl" :alt="name" />
       <p>{{ name }}</p>
-      <p>{{ type }}</p>
+      <div class="pokemon-types">
+        <img
+          v-for="(type, index) in types"
+          :key="index"
+          :src="`../_nuxt/assets/images/pokemon-types/${type}.png`"
+          :alt="type"
+          width="50%"
+          height="50%"
+        />
+      </div>
     </NuxtLink>
   </div>
 </template>
@@ -48,5 +69,17 @@ defineProps({
   font-size: 1.2em;
   font-weight: bold;
   color: #333;
+}
+
+.pokemon-types {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pokemon-types img {
+  max-width: 50px;
+  height: auto;
+  display: block;
 }
 </style>
